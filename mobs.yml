@@ -1,0 +1,11 @@
+Mobs:
+    Skellington:
+        Type: 'skeleton'
+        DisplayName: '&4Skellington'
+        Health: 200
+        Damage: 20
+        Despawn: false
+        ArrowImmune: false
+        DeathBroadcast: true
+        Items:
+        - 'Dirt,1.0'

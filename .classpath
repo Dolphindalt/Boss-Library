@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="code"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Dalton/Desktop/Develope Stuff/Libraries/spigot-1.9.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

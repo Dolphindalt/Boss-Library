@@ -1,0 +1,12 @@
+name: MobBosses
+main: code.boss.BossPlugin
+version: 0.1
+author: Dolphindalt
+description: Mob library recreation.
+commands:
+    boss:
+        description: Default boss command.
+permisions:
+    boss.admin:
+        description: Admin permissions for the entire plugin.
+        default: op

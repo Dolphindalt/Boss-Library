@@ -1,0 +1,10 @@
+Items:
+  Dirt:
+    Type: 'DIRT'
+    Name: '&4DIRT'
+    Data: 0
+    Lore:
+    - '&eGood ol dirt'
+    Enchantments:
+    - DURABILITY,5
+    Amount: 5
