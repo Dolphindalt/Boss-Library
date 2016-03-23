@@ -1,12 +1,17 @@
 package boss.skills;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+
+import boss.mob.Mob;
+import boss.mob.MobHandler;
 
 /*
  *  This class and other skill classes were heavily contributed to by ThaH3lper.
@@ -36,6 +41,26 @@ public abstract class Skill {
 			}
 		}
 		return list;
+	}
+	
+	protected void message(int radius, LivingEntity le, String message)
+	{
+		List<Player> list = new ArrayList<Player>();
+		List<Entity> near = le.getNearbyEntities(radius, radius, radius);
+		for(Entity check : near)
+		{
+			if(check instanceof Player)
+			{
+				list.add((Player) check);
+			}
+		}
+		Mob mob = MobHandler.getMob(le);
+		Iterator<Player> itr = list.iterator();
+		while(itr.hasNext())
+		{
+			Player temp = itr.next();
+			temp.sendMessage("<" + mob.getDisplayName() + ChatColor.RESET + "> " + message);
+		}
 	}
 	
 	public double getChance() {
