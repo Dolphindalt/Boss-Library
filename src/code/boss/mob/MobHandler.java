@@ -96,4 +96,13 @@ public class MobHandler {
 		return null;
 	}
 	
+	public static Mob getMob(String configName) {
+		for (Mob m : mobs) {
+			if (m.getConfigName().equals(configName)) {
+				return m;
+			}
+		}
+		return null;
+	}
+	
 }
