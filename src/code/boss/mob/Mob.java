@@ -59,6 +59,7 @@ public class Mob {
 	
 	private boolean deathBroadcast;
 	private boolean hasSkills = false;
+	private boolean parrying;
 	
 	private List<ItemObject> items;
 	private List<Double> chances;
@@ -76,6 +77,7 @@ public class Mob {
 		this.deathBroadcast = deathBroadcast;
 		this.items = items;
 		this.chances = chances;
+		this.parrying = false;
 	}
 	
 	public void spawn(Location l) {
@@ -382,6 +384,14 @@ public class Mob {
 
 	public boolean hasSkills() {
 		return hasSkills;
+	}
+
+	public boolean isParrying() {
+		return parrying;
+	}
+
+	public void setParrying(boolean parrying) {
+		this.parrying = parrying;
 	}
 	
 }
