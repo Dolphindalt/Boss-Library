@@ -1,5 +1,6 @@
 package boss.listeners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.util.Vector;
 
 import boss.mob.Mob;
 import boss.mob.MobHandler;
@@ -39,7 +41,9 @@ public class EntityDamageByEntityListener implements Listener {
 			}
 			
 			if (mob.hasSkills()) {
-				//TODO: EXECUTE A SKILL
+				if (damaged.getTicksLived() <= 15) {
+					mob.execute((LivingEntity)damaged);
+				}
 			}
 		}
 		
@@ -61,7 +65,9 @@ public class EntityDamageByEntityListener implements Listener {
 			if(mob == null) return;
 			
 			if(mob.hasSkills()) {
-
+				if (damaged.getTicksLived() <= 15) {
+					mob.execute((LivingEntity)damaged);
+				}
 			}
 		}
 		
@@ -83,7 +89,9 @@ public class EntityDamageByEntityListener implements Listener {
 			if(mob == null) return;
 			
 			if(mob.hasSkills()) {
-
+				if (damaged.getTicksLived() <= 15) {
+					mob.execute((LivingEntity)damaged);
+				}
 			}
 		}
 		
@@ -96,13 +104,23 @@ public class EntityDamageByEntityListener implements Listener {
 			Mob mob = MobHandler.getMob((LivingEntity) damaged);
 			
 			if (mob != null) {
-				if (e.getDamager() instanceof Player) {
-				//TODO: Add parrying!
+				if (mob.isParrying()) {
+					if (e.getDamager() instanceof Player) {
+						Player target = (Player) e.getDamager();
+						target.damage(mob.getDamage());
+						Vector v = mob.getTargetVector(damaged.getLocation(), target.getLocation());
+						target.setVelocity(v.add(new Vector(0,1,0)));
+						mob.message(damager, ChatColor.RED + "Parried " + target.getDisplayName());
+						e.setCancelled(true);
+						return;
+					}
 				}
 			}
 			
 			if (mob.hasSkills()) {
-				
+				if (damaged.getTicksLived() <= 15) {
+					mob.execute((LivingEntity)damaged);
+				}
 			}
 			
 			Mob mDamager = MobHandler.getMob(damager);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Bat;
 import org.bukkit.entity.Blaze;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Endermite;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Giant;
@@ -26,6 +28,7 @@ import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Silverfish;
 import org.bukkit.entity.Skeleton;
@@ -42,9 +45,11 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import boss.items.ItemObject;
 import boss.skills.Grab;
+import boss.skills.HealthDepend;
 import boss.skills.LightningStorm;
 import boss.skills.Parry;
 import boss.skills.Potion;
@@ -53,6 +58,7 @@ import boss.skills.Skill;
 import boss.skills.SpawnAdd;
 import boss.skills.Teleport;
 import boss.skills.Toss;
+import boss.skills.UsableOnce;
 import boss.utils.Namer;
 import boss.utils.Parse;
 
@@ -106,8 +112,8 @@ public class Mob {
 				if (split.length != 3) continue;
 				this.skills.add(new Shuffle(Parse.parseDouble(split[1]), Parse.parseInteger(split[2])));
 			} else if (split[0].equalsIgnoreCase("spawnadd")) {
-				if (split.length != 4) continue;
-				this.skills.add(new SpawnAdd(Parse.parseDouble(split[1]), split[2], Parse.parseInteger(split[3])));
+				if (split.length != 5) continue;
+				this.skills.add(new SpawnAdd(Parse.parseDouble(split[1]), split[2], Parse.parseInteger(split[3]), Parse.parseInteger(split[4])));
 			} else if (split[0].equalsIgnoreCase("toss")) {
 				if (split.length != 4) continue;
 				this.skills.add(new Toss(Parse.parseDouble(split[1]), Parse.parseInteger(split[2]), Parse.parseInteger(split[3])));
@@ -140,6 +146,26 @@ public class Mob {
 		le.setHealth(health);
 	}
 
+	public void execute(LivingEntity le) {
+		Iterator<Skill> itr = skills.iterator();
+		
+		while(itr.hasNext()) {
+			Skill temp = itr.next();
+			if (temp instanceof UsableOnce) { 
+				if (((UsableOnce)temp).hasUsed()) continue;
+			}
+			if (temp instanceof HealthDepend) {
+				if (((HealthDepend) temp).getHealthNeedToCast() < (int)le.getHealth()) continue;
+			}
+			if(Math.random() > temp.getChance()) continue;
+			
+			try {
+				temp.run(le);
+			} catch (Exception e) {
+			}
+		}
+	}
+	
 	public List<ItemStack> createDropLoot() {
 		if (items == null || chances == null) return null;
 		List<ItemStack> list = new ArrayList<ItemStack>(); 
@@ -151,6 +177,32 @@ public class Mob {
 		}
 		return list;
 
+	}
+	
+	public Vector getTargetVector(Location shooter, Location target) {
+		Location first_location = shooter.add(0, 1, 0);
+		Location second_location = target.add(0, 1, 0);
+		Vector vector = second_location.toVector().subtract(first_location.toVector());
+		return vector;
+	}
+	
+	public void message(LivingEntity ent, String message) {
+		List<Player> list = new ArrayList<Player>();
+		List<Entity> near = ent.getNearbyEntities(30, 30, 30);
+		for(Entity check : near)
+		{
+			if(check instanceof Player)
+			{
+				list.add((Player) check);
+			}
+		}
+		Mob mob = MobHandler.getMob(ent);
+		Iterator<Player> itr = list.iterator();
+		while(itr.hasNext())
+		{
+			Player temp = itr.next();
+			temp.sendMessage("<" + mob.getDisplayName() + ChatColor.RESET + "> " + message);
+		}
 	}
 	
 	//Method is old needs updating
