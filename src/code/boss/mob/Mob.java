@@ -40,13 +40,18 @@ import org.bukkit.entity.Wither;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import boss.items.ItemObject;
+import boss.skills.Grab;
 import boss.skills.LightningStorm;
 import boss.skills.Parry;
+import boss.skills.Potion;
 import boss.skills.Shuffle;
 import boss.skills.Skill;
 import boss.skills.SpawnAdd;
+import boss.skills.Teleport;
 import boss.skills.Toss;
 import boss.utils.Namer;
 import boss.utils.Parse;
@@ -109,6 +114,20 @@ public class Mob {
 			} else if (split[0].equalsIgnoreCase("lightningstorm")) {
 				if (split.length != 3) continue;
 				this.skills.add(new LightningStorm(Parse.parseDouble(split[1]), Parse.parseDouble(split[2])));
+			} else if (split[0].equalsIgnoreCase("teleport")) {
+				if (split.length != 3) continue;
+				this.skills.add(new Teleport(Parse.parseDouble(split[1]), Parse.parseInteger(split[2])));
+			} else if (split[0].equalsIgnoreCase("potion")) {
+				if(split.length != 3) continue;
+				String[] data = split[1].split(":");
+				if(data.length != 4) continue;
+				int radius = Integer.valueOf(data[3]);
+				double chance = Double.valueOf(split[2]);
+				PotionEffect potion = new PotionEffect(PotionEffectType.getByName(data[0]), Parse.parseInteger(data[1]) * 20, Parse.parseInteger(data[2]) - 1);
+				this.skills.add(new Potion(chance, radius, potion));
+			} else if (split[0].equalsIgnoreCase("grab")) {
+				if (split.length != 2) continue;
+				this.skills.add(new Grab(Parse.parseDouble(split[1])));
 			}
 		}
 	}

@@ -12,12 +12,15 @@ import boss.utils.CustomEntityFirework;
 
 public class LightningStorm extends Skill {
 
+	private double damage;
+	
 	private final FireworkEffect.Builder builder = FireworkEffect.builder();
 	private final FireworkEffect fe = builder.flicker(true).with(Type.BURST).withColor(Color.AQUA).trail(false).build();
 	
-	public LightningStorm(double chance) {
+	public LightningStorm(double chance, double damage) {
 		super(chance);
 		this.chance = chance;
+		this.damage = damage;
 	}
 	
 	public void run(LivingEntity caster)
@@ -374,7 +377,7 @@ public class LightningStorm extends Skill {
     			continue;
         	LivingEntity le = (LivingEntity)en;
             center.getWorld().strikeLightningEffect(le.getLocation());
-            le.setHealth(le.getHealth() - (le.getHealth()/10));
+            le.setHealth(le.getHealth() - damage);
             le.damage(0f);
         }
 	}

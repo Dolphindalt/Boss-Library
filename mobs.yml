@@ -1,3 +1,22 @@
+# bat, blaze, cavespider, creeper, skeleton, skeletonwither slime, spider, magmacube, pigmen, babypigmen,  
+# witch, wolf,  ghast, zombie, babyzombie, villagezombie, babyvillagezombie, irongolem, snowman,
+# wither, enderdragon, horse, babyhorse, pig, babypig, cow, babycow, ocelot, babyocelot, mushroomcow,
+# babymushroomcow, villager, babyvillager.
+#    =============== Skills \/ ===========================================================---
+#    - spawnadd <bossnamefromthisconfig> <lifetotaltospawnat> <amount> <chance>
+#    - teleport <radius> <chance>
+#    - dragin <radius> <chance> wip
+#    - tnt <radius> <chance> wip
+#    - potion <NAME>:<DURATION>:<AMPLIFIER>:<RADIUS> <chance>
+#    - toss <radius> <power (very sensitive 2 is strong)> <chance>
+#
+#    === Potion Examples =================================================================---
+#    - potion SLOW:5:2:20 0.035
+#    - potion POISON:5:2 0.035
+#    - potion WITHER:5:2 0.035
+#    - potion CONFUSION:5:2 0.035
+#    - potion HARM:5:2 0.031
+#    - potion BLINDNESS:5:2 0.035
 Mobs:
     Skellington:
         Type: 'skeleton'
