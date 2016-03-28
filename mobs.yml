@@ -10,3 +10,5 @@ Mobs:
         Items:
         - 'Dirt,1.0'
         - 'TestHelmet,1.0'
+        Skills:
+        - 'Parry,0.75'

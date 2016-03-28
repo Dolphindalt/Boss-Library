@@ -34,19 +34,23 @@ public class MobHandler {
 				List<Double> chances = new ArrayList<Double>();
 				List<String> itemNames = cs.getStringList(name + ".Items");
 				
-				for (String s : itemNames) {
-					String[] sl = s.split(",");
-					for (ItemObject io : ItemHandler.items) {
-						if (io.getConfigName().equals(sl[0])) {
-							if (Parse.parseDouble(sl[1]) != null) {
-								items.add(io);
-								chances.add(Parse.parseDouble(sl[1]));
+				if (itemNames != null) {
+					for (String s : itemNames) {
+						String[] sl = s.split(",");
+						for (ItemObject io : ItemHandler.items) {
+							if (io.getConfigName().equals(sl[0])) {
+								if (Parse.parseDouble(sl[1]) != null) {
+									items.add(io);
+									chances.add(Parse.parseDouble(sl[1]));
+								}
 							}
 						}
 					}
 				}
 				
-				Mob mob = new Mob(name, type, displayName, health, damage, despawn, arrowImmune, deathBroadcast, items, chances);
+				List<String> skills = cs.getStringList(name + ".Skills");
+				
+				Mob mob = new Mob(name, type, displayName, health, damage, despawn, arrowImmune, deathBroadcast, items, chances, skills);
 				
 				configNames.add(mob.getConfigName());
 				

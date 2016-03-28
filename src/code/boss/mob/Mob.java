@@ -1,6 +1,7 @@
 package boss.mob;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -41,7 +42,14 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 
 import boss.items.ItemObject;
+import boss.skills.LightningStorm;
+import boss.skills.Parry;
+import boss.skills.Shuffle;
+import boss.skills.Skill;
+import boss.skills.SpawnAdd;
+import boss.skills.Toss;
 import boss.utils.Namer;
+import boss.utils.Parse;
 
 /*
  *  Most of this class was created by ThaH3lper, check him out on the bukkit forums.ö
@@ -64,9 +72,11 @@ public class Mob {
 	private List<ItemObject> items;
 	private List<Double> chances;
 	
+	private List<Skill> skills;
+	
 	public Mob(String configName, String type, String displayName, int health, int damage,
 			boolean despawn, boolean arrowImmune, boolean deathBroadcast, List<ItemObject> items,
-			List<Double> chances) {
+			List<Double> chances, List<String> skills) {
 		this.configName = configName;
 		this.type = type;
 		this.displayName = displayName;
@@ -78,6 +88,29 @@ public class Mob {
 		this.items = items;
 		this.chances = chances;
 		this.parrying = false;
+		//Loading skills
+		Iterator<String> itr = skills.iterator();
+		while(itr.hasNext()) {
+			String s = itr.next();
+			String[] split = s.split(",");
+			if (split[0].equalsIgnoreCase("parry")) {
+				if (split.length != 2) continue;
+				double chance = Parse.parseDouble(split[1]);
+				this.skills.add(new Parry(chance));
+			} else if (split[0].equalsIgnoreCase("shuffle")) {
+				if (split.length != 3) continue;
+				this.skills.add(new Shuffle(Parse.parseDouble(split[1]), Parse.parseInteger(split[2])));
+			} else if (split[0].equalsIgnoreCase("spawnadd")) {
+				if (split.length != 4) continue;
+				this.skills.add(new SpawnAdd(Parse.parseDouble(split[1]), split[2], Parse.parseInteger(split[3])));
+			} else if (split[0].equalsIgnoreCase("toss")) {
+				if (split.length != 4) continue;
+				this.skills.add(new Toss(Parse.parseDouble(split[1]), Parse.parseInteger(split[2]), Parse.parseInteger(split[3])));
+			} else if (split[0].equalsIgnoreCase("lightningstorm")) {
+				if (split.length != 3) continue;
+				this.skills.add(new LightningStorm(Parse.parseDouble(split[1]), Parse.parseDouble(split[2])));
+			}
+		}
 	}
 	
 	public void spawn(Location l) {
