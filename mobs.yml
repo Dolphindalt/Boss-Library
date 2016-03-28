@@ -9,3 +9,4 @@ Mobs:
         DeathBroadcast: true
         Items:
         - 'Dirt,1.0'
+        - 'TestHelmet,1.0'

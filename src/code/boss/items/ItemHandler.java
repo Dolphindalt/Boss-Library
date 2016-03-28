@@ -10,6 +10,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
+import code.op.gear.CarbyneGear;
+import code.op.gear.GearHandler;
+import boss.BossPlugin;
 import boss.utils.Namer;
 
 public class ItemHandler {
@@ -42,9 +45,30 @@ public class ItemHandler {
 					is.addUnsafeEnchantment(Enchantment.getByName(split[0]), lvl);
 				}
 			}
-			System.out.println(s);
-			items.add(new ItemObject(cs.getString(s + ".Name"), s, is));
+			items.add(new ItemObject(s, is));
 		}
+		
+		if (BossPlugin.carbyneEnabled) {
+			ConfigurationSection carcs = fc.getConfigurationSection("Carbyne");
+			GearHandler handler = BossPlugin.carbyne.getGearHanlder();
+			for (String s : carcs.getKeys(false)) {
+				if (carcs.getString(s + ".GearCode") == null) continue;
+				String code = carcs.getString(s + ".GearCode");
+				ItemStack is = getCarbyneGear(code, handler);
+				if (is == null) continue;
+				items.add(new ItemObject(s, is));
+			}
+		}
+		
+	}
+	
+	public static ItemStack getCarbyneGear(String tag, GearHandler handler) {
+		for (CarbyneGear cg : handler.getGear()) {
+			if (cg.getDisplayName().equals(tag)) {
+				return cg.getItem();
+			}
+		}
+		return null;
 	}
 	
 }

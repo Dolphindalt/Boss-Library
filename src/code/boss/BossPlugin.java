@@ -9,9 +9,11 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import code.op.Main;
 import boss.items.ItemHandler;
 import boss.listeners.EntityDamageByEntityListener;
 import boss.listeners.EntityDeathListener;
@@ -24,6 +26,10 @@ public class BossPlugin extends JavaPlugin {
 	
 	public static BossPlugin instance;
 	
+	public static Plugin carbynePlugin;
+	public static Main carbyne;
+	public static boolean carbyneEnabled = false;
+	
 	public File mobFile;
 	public File itemFile;
 	
@@ -32,6 +38,14 @@ public class BossPlugin extends JavaPlugin {
 	
 	public void onEnable() {
 		instance = this;
+		
+		PluginManager pm = Bukkit.getServer().getPluginManager();
+		
+		if (pm.isPluginEnabled("Carbyne")) {
+			carbynePlugin = pm.getPlugin("Carbyne");
+			carbyne = (Main) carbynePlugin;
+			carbyneEnabled = true;
+		}
 		
 		mobFile = new File(getDataFolder(), "mobs.yml");
 		itemFile = new File(getDataFolder(), "items.yml");
@@ -52,7 +66,7 @@ public class BossPlugin extends JavaPlugin {
 		MobHandler.loadMobs(mobData);
 		logger.info("[Mob Handler]: Loaded " + MobHandler.mobs.size() + " mobs!");
 		
-		registerEvents();
+		registerEvents(pm);
 		registerCommands();
 	}
 	
@@ -60,8 +74,7 @@ public class BossPlugin extends JavaPlugin {
 		
 	}
 	
-	public void registerEvents() {
-		PluginManager pm = Bukkit.getServer().getPluginManager();
+	public void registerEvents(PluginManager pm) {
 		pm.registerEvents(new EntityDamageByEntityListener(), this);
 		pm.registerEvents(new EntityDeathListener(), this);
 	}

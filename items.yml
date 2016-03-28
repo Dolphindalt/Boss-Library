@@ -8,3 +8,6 @@ Items:
     Enchantments:
     - DURABILITY,5
     Amount: 5
+Carbyne:
+  TestHelmet:
+    GearCode: 'TTH'

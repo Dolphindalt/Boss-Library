@@ -1,8 +1,9 @@
 name: MobBosses
-main: code.boss.BossPlugin
+main: boss.BossPlugin
 version: 0.1
 author: Dolphindalt
 description: Mob library recreation.
+softdepend: [Carbyne]
 commands:
     boss:
         description: Default boss command.

@@ -6,16 +6,10 @@ public class ItemObject {
 
 	private ItemStack is;
 	private String configName;
-	private String name;
 	
-	public ItemObject(String name, String configName, ItemStack is) {
+	public ItemObject(String configName, ItemStack is) {
 		this.configName = configName;
-		this.name = name;
 		this.is = is;
-	}
-
-	public String getName() {
-		return name;
 	}
 	
 	public String getConfigName() {
