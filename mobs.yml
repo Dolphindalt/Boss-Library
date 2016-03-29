@@ -8,7 +8,7 @@
 #    - dragin <radius> <chance> wip
 #    - tnt <radius> <chance> wip
 #    - potion <NAME>:<DURATION>:<AMPLIFIER>:<RADIUS> <chance>
-#    - toss <radius> <power (very sensitive 2 is strong)> <chance>
+#    - toss <chance> <radius> <power (very sensitive 2 is strong)>
 #
 #    === Potion Examples =================================================================---
 #    - potion SLOW:5:2:20 0.035
@@ -22,7 +22,7 @@ Mobs:
         Type: 'skeleton'
         DisplayName: '&4Skellington'
         Health: 200
-        Damage: 20
+        Damage: 3
         Despawn: false
         ArrowImmune: false
         DeathBroadcast: true
@@ -31,3 +31,18 @@ Mobs:
         - 'TestHelmet,1.0'
         Skills:
         - 'Parry,0.75'
+    God:
+        Type: 'horse'
+        DisplayName: '&eGod'
+        Health: 200
+        Damage: 3
+        Despawn: false
+        ArrowImmune: false
+        DeathBroadcast: true
+        Items:
+        - 'Dirt,1.0'
+        - 'TestHelmet,1.0'
+        Skills:
+        - 'Parry,0.30'
+        - 'Potion,CONFUSION:5:2:100,0.20'
+        - 'toss,0.20,50,1'
