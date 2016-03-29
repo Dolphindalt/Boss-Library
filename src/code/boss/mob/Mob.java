@@ -209,7 +209,7 @@ public class Mob {
 		while(itr.hasNext())
 		{
 			Player temp = itr.next();
-			temp.sendMessage("<" + mob.getDisplayName() + ChatColor.RESET + "> " + message);
+			temp.sendMessage(Namer.addChatColor("<" + mob.getDisplayName() + ChatColor.RESET + "> " + message));
 		}
 	}
 	
