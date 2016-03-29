@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.TNTPrimed;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.util.Vector;
@@ -21,7 +22,9 @@ import boss.mob.MobHandler;
 
 public class EntityDamageByEntityListener implements Listener {
 
+	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+		try {
 		if (e.getDamager() instanceof TNTPrimed) return;
 		
 		Entity damaged = e.getEntity();
@@ -41,9 +44,7 @@ public class EntityDamageByEntityListener implements Listener {
 			}
 			
 			if (mob.hasSkills()) {
-				if (damaged.getTicksLived() <= 15) {
-					mob.execute((LivingEntity)damaged);
-				}
+				mob.execute();
 			}
 		}
 		
@@ -65,9 +66,7 @@ public class EntityDamageByEntityListener implements Listener {
 			if(mob == null) return;
 			
 			if(mob.hasSkills()) {
-				if (damaged.getTicksLived() <= 15) {
-					mob.execute((LivingEntity)damaged);
-				}
+				mob.execute();
 			}
 		}
 		
@@ -89,9 +88,7 @@ public class EntityDamageByEntityListener implements Listener {
 			if(mob == null) return;
 			
 			if(mob.hasSkills()) {
-				if (damaged.getTicksLived() <= 15) {
-					mob.execute((LivingEntity)damaged);
-				}
+				mob.execute();
 			}
 		}
 		
@@ -108,9 +105,9 @@ public class EntityDamageByEntityListener implements Listener {
 					if (e.getDamager() instanceof Player) {
 						Player target = (Player) e.getDamager();
 						target.damage(mob.getDamage());
-						Vector v = mob.getTargetVector(damaged.getLocation(), target.getLocation());
+						Vector v = mob.getTargetVector(mob.getEntity().getLocation(), target.getLocation());
 						target.setVelocity(v.add(new Vector(0,1,0)));
-						mob.message(damager, ChatColor.RED + "Parried " + target.getDisplayName());
+						mob.message(mob.getEntity(), ChatColor.RED + "parried " + target.getDisplayName());
 						e.setCancelled(true);
 						return;
 					}
@@ -118,9 +115,7 @@ public class EntityDamageByEntityListener implements Listener {
 			}
 			
 			if (mob.hasSkills()) {
-				if (damaged.getTicksLived() <= 15) {
-					mob.execute((LivingEntity)damaged);
-				}
+				mob.execute();
 			}
 			
 			Mob mDamager = MobHandler.getMob(damager);
@@ -128,6 +123,8 @@ public class EntityDamageByEntityListener implements Listener {
 			e.setDamage(mDamager.getDamage()/15);
 		}
 		
+		} catch (NullPointerException ex) {
+		}
 	}
 	
 }

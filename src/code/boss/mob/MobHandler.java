@@ -6,6 +6,7 @@ import java.util.logging.Level;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
 import boss.BossPlugin;
@@ -17,6 +18,8 @@ public class MobHandler {
 
 	public static List<Mob> mobs = new ArrayList<Mob>();
 	public static List<String> configNames = new ArrayList<String>();
+	
+	public static List<Entity> livingMobs = new ArrayList<>();
 	
 	public static boolean loadMobs(FileConfiguration fc) {
 		ConfigurationSection cs = fc.getConfigurationSection("Mobs");

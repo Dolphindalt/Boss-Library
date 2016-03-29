@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -71,7 +73,11 @@ public class BossPlugin extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		
+		Iterator<Entity> itr = MobHandler.livingMobs.iterator();
+		while(itr.hasNext()) {
+			Entity temp = itr.next();
+			temp.remove();
+		}
 	}
 	
 	public void registerEvents(PluginManager pm) {

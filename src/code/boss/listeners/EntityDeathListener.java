@@ -41,6 +41,8 @@ public class EntityDeathListener implements Listener {
 			Bukkit.broadcastMessage(killer.getDisplayName() + ChatColor.YELLOW + " has slain " + ChatColor.DARK_PURPLE + mob.getConfigName());
 		}
 		
+		MobHandler.livingMobs.remove(mob.getEntity());
+		
 		} catch (NullPointerException ex) {
 			return;
 		}

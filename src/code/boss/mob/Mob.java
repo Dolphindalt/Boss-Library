@@ -12,6 +12,7 @@ import org.bukkit.entity.CaveSpider;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Endermite;
@@ -77,13 +78,15 @@ public class Mob {
 	private boolean arrowImmune;
 	
 	private boolean deathBroadcast;
-	private boolean hasSkills = false;
+	private boolean hasSkills;
 	private boolean parrying;
 	
 	private List<ItemObject> items;
 	private List<Double> chances;
 	
 	private List<Skill> skills;
+	
+	private Entity entity = null;
 	
 	public Mob(String configName, String type, String displayName, int health, int damage,
 			boolean despawn, boolean arrowImmune, boolean deathBroadcast, List<ItemObject> items,
@@ -98,7 +101,9 @@ public class Mob {
 		this.deathBroadcast = deathBroadcast;
 		this.items = items;
 		this.chances = chances;
+		this.hasSkills = false;
 		this.parrying = false;
+		this.skills = new ArrayList<>();
 		//Loading skills
 		Iterator<String> itr = skills.iterator();
 		while(itr.hasNext()) {
@@ -136,6 +141,7 @@ public class Mob {
 				this.skills.add(new Grab(Parse.parseDouble(split[1])));
 			}
 		}
+		if (!this.skills.isEmpty()) hasSkills = true;
 	}
 	
 	public void spawn(Location l) {
@@ -144,9 +150,11 @@ public class Mob {
 		le.setCustomName(Namer.addChatColor(displayName));
 		le.setMaxHealth(health);
 		le.setHealth(health);
+		entity = le;
+		MobHandler.livingMobs.add(entity);
 	}
 
-	public void execute(LivingEntity le) {
+	public void execute() {
 		Iterator<Skill> itr = skills.iterator();
 		
 		while(itr.hasNext()) {
@@ -155,12 +163,12 @@ public class Mob {
 				if (((UsableOnce)temp).hasUsed()) continue;
 			}
 			if (temp instanceof HealthDepend) {
-				if (((HealthDepend) temp).getHealthNeedToCast() < (int)le.getHealth()) continue;
+				if (((HealthDepend) temp).getHealthNeedToCast() < (int)((Damageable) entity).getHealth()) continue;
 			}
 			if(Math.random() > temp.getChance()) continue;
 			
 			try {
-				temp.run(le);
+				temp.run((LivingEntity) entity);
 			} catch (Exception e) {
 			}
 		}
@@ -186,7 +194,7 @@ public class Mob {
 		return vector;
 	}
 	
-	public void message(LivingEntity ent, String message) {
+	public void message(Entity ent, String message) {
 		List<Player> list = new ArrayList<Player>();
 		List<Entity> near = ent.getNearbyEntities(30, 30, 30);
 		for(Entity check : near)
@@ -196,7 +204,7 @@ public class Mob {
 				list.add((Player) check);
 			}
 		}
-		Mob mob = MobHandler.getMob(ent);
+		Mob mob = MobHandler.getMob((LivingEntity) ent);
 		Iterator<Player> itr = list.iterator();
 		while(itr.hasNext())
 		{
@@ -496,6 +504,10 @@ public class Mob {
 
 	public void setParrying(boolean parrying) {
 		this.parrying = parrying;
+	}
+
+	public Entity getEntity() {
+		return entity;
 	}
 	
 }

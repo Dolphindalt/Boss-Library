@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import boss.mob.Mob;
 import boss.mob.MobHandler;
+import boss.utils.Namer;
 
 /*
  *  This class and other skill classes were heavily contributed to by ThaH3lper.
@@ -59,7 +60,7 @@ public abstract class Skill {
 		while(itr.hasNext())
 		{
 			Player temp = itr.next();
-			temp.sendMessage("<" + mob.getDisplayName() + ChatColor.RESET + "> " + message);
+			temp.sendMessage(Namer.addChatColor("<" + mob.getDisplayName() + ChatColor.RESET + "> " + message));
 		}
 	}
 	

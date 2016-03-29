@@ -23,6 +23,7 @@ public class Parry extends Skill {
 	}
 
 	public void run(LivingEntity le) {
+		Parry p = this;
 		final Mob mob = MobHandler.getMob(le);
 		
 		try {
@@ -41,9 +42,9 @@ public class Parry extends Skill {
 				{
 				}
 				mob.setParrying(false);
+				p.message(30, le, ChatColor.RED + "lets down his guard!");
 			}
 		},5*20);
-		this.message(30, le, ChatColor.RED + "lets down his guard!");
 	}
 
 }
