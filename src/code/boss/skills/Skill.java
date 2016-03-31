@@ -28,14 +28,11 @@ public abstract class Skill {
 	
 	public abstract void run(LivingEntity le);
 	
-	protected List<Player> getPlayers(int radius, LivingEntity mob)
-	{
+	protected List<Player> getPlayers(int radius, LivingEntity mob) {
 		List<Player> list = new ArrayList<Player>();
 		List<Entity> near = mob.getNearbyEntities(radius, radius, radius);
-		for(Entity check : near)
-		{
-			if(check instanceof Player)
-			{
+		for(Entity check : near) {
+			if(check instanceof Player) {
 				if(((Player)check).getGameMode().equals(GameMode.CREATIVE))
 					continue;
 				list.add((Player) check);

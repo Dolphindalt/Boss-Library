@@ -153,6 +153,17 @@ public class Mob {
 		entity = le;
 		MobHandler.livingMobs.add(entity);
 	}
+	
+	public void spawn(Location l, List<Entity> spawnedEnts) {
+		LivingEntity le = this.spawnMob(l, this.type);
+		le.setCustomNameVisible(true);
+		le.setCustomName(Namer.addChatColor(displayName));
+		le.setMaxHealth(health);
+		le.setHealth(health);
+		entity = le;
+		MobHandler.livingMobs.add(entity);
+		spawnedEnts.add(entity);
+	}
 
 	public void execute() {
 		Iterator<Skill> itr = skills.iterator();
