@@ -59,7 +59,7 @@ public class MobHandler {
 				
 				mobs.add(mob);
 			} else {
-				BossPlugin.instance.logger.log(Level.SEVERE, name + " could not be loaded!");
+				BossPlugin.logger.log(Level.SEVERE, name + " could not be loaded!");
 				return false;
 			}
 		}

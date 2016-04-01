@@ -12,19 +12,31 @@ import boss.mob.Mob;
 public class MobSpawner {
 
 	private Mob mob;
-	
 	private List<Entity> spawnedMobs;
+	private int interval;
 	private int maxMobs;
 	
 	private Location location;
 	
-	public MobSpawner(Mob mob, Location location) {
+	public MobSpawner(Mob mob, Location location, int interval, int maxMobs) {
 		this.mob = mob;
 		this.spawnedMobs = new ArrayList<>();
+		this.interval = interval;
+		this.maxMobs = maxMobs;
 		this.location = location;
 	}
 	
-	public void spawnMob() {
+	public void tickSpawner() {
+		checkForDeadMobs();
+		
+		if (interval == 0) {
+			spawnMob();
+		}
+		
+		interval--;
+	}
+	
+	private void spawnMob() {
 		if (spawnedMobs.size() < maxMobs) {
 			location.getChunk().load(true);
 			mob.spawn(location, spawnedMobs);
@@ -32,7 +44,7 @@ public class MobSpawner {
 		}
 	}
 	
-	public void checkForDeadMobs() {
+	private void checkForDeadMobs() {
 		Iterator<Entity> itr = spawnedMobs.iterator();
 		
 		while(itr.hasNext()) {
@@ -41,6 +53,7 @@ public class MobSpawner {
 				spawnedMobs.remove(check);
 			}
 		}
+		
 	}
 	
 }

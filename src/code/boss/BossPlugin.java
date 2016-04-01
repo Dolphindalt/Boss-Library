@@ -24,7 +24,7 @@ import boss.mob.MobHandler;
 
 public class BossPlugin extends JavaPlugin {
 
-	public final Logger logger = Logger.getLogger("Minecraft");
+	public static final Logger logger = Logger.getLogger("Minecraft");
 	
 	public static BossPlugin instance;
 	
