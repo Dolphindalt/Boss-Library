@@ -58,6 +58,10 @@ public class ItemHandler {
 				if (is == null) continue;
 				items.add(new ItemObject(s, is));
 			}
+			ConfigurationSection m = fc.getConfigurationSection("Money");
+			if (GearHandler.getMoney() != null) {
+				items.add(new ItemObject(m.toString(), GearHandler.getMoney()));
+			}
 		}
 		
 	}

@@ -8,6 +8,9 @@ Items:
     Enchantments:
     - DURABILITY,5
     Amount: 5
+# Carbyne depend optional
 Carbyne:
   TestHelmet:
     GearCode: 'TTH'
+# Item name for the carbyne money object
+Money:

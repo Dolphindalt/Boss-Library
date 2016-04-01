@@ -46,3 +46,27 @@ Mobs:
         - 'Parry,0.30'
         - 'Potion,CONFUSION:5:2:100,0.20'
         - 'toss,0.20,50,1'
+    Zimbaweeb:
+        Type: 'slime'
+        DisplayName: '&2Zimbaweeb'
+        Health: 200
+        Damage: 5
+        Despawn: false
+        ArrowImmune: true
+        DeathBroadcast: true
+        Items:
+        Skills:
+        - 'shuffle,0.20,25'
+    SplashSpammer:
+        Type: 'witch'
+        DisplayName: '&2Zimbaweeb'
+        Health: 220
+        Damage: 1
+        Despawn: false
+        ArrowImmune: true
+        DeathBroadcast: true
+        Items:
+        Skills:
+        - 'Potion,HARM:5:2,0.20'
+        - 'spawnadd,0.05,Skellington,1,50'
+        - 'teleport,0.25,45'
