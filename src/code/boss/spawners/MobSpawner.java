@@ -1,33 +1,28 @@
 package boss.spawners;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-
 import boss.mob.Mob;
 
 public class MobSpawner {
 
 	private Mob mob;
-	private List<Entity> spawnedMobs;
+	private int intervalConstant;
 	private int interval;
 	private int maxMobs;
+	private int livingMobs;
 	
 	private Location location;
 	
 	public MobSpawner(Mob mob, Location location, int interval, int maxMobs) {
 		this.mob = mob;
-		this.spawnedMobs = new ArrayList<>();
-		this.interval = interval;
+		this.intervalConstant= interval;
+		this.interval = 0;
+		this.livingMobs = 0;
 		this.maxMobs = maxMobs;
 		this.location = location;
 	}
 	
 	public void tickSpawner() {
-		checkForDeadMobs();
 		
 		if (interval == 0) {
 			spawnMob();
@@ -37,23 +32,13 @@ public class MobSpawner {
 	}
 	
 	private void spawnMob() {
-		if (spawnedMobs.size() < maxMobs) {
+		if (livingMobs <= maxMobs) {
 			location.getChunk().load(true);
-			mob.spawn(location, spawnedMobs);
+			mob.spawn(location, this);
+			livingMobs++;
 			location.getChunk().load(false);
+			interval = intervalConstant;
 		}
-	}
-	
-	private void checkForDeadMobs() {
-		Iterator<Entity> itr = spawnedMobs.iterator();
-		
-		while(itr.hasNext()) {
-			Entity check = itr.next();
-			if (check.isDead()) {
-				spawnedMobs.remove(check);
-			}
-		}
-		
 	}
 	
 }

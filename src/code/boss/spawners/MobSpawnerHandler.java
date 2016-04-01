@@ -25,17 +25,15 @@ public class MobSpawnerHandler implements Runnable {
 				BossPlugin.logger.warning("MobName failed for " + s);
 				continue;
 			}
+			
 			String sworld;
 			World world;
-			if ((sworld = cs.getString(".World")) != null) {
-				if ((world = Bukkit.getWorld(sworld)) != null) {
-					
-				} else {
-					BossPlugin.logger.warning("Ibalid world for " + s);
-					continue;
-				}
-			} else {
+			if ((sworld = cs.getString(".World")) == null) {
 				BossPlugin.logger.warning("World failed for " + s);
+				continue;
+			}
+			if ((world = Bukkit.getWorld(sworld)) == null) {
+				BossPlugin.logger.warning("Invalid world for " + s);
 				continue;
 			}
 			

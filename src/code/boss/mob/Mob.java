@@ -60,6 +60,7 @@ import boss.skills.SpawnAdd;
 import boss.skills.Teleport;
 import boss.skills.Toss;
 import boss.skills.UsableOnce;
+import boss.spawners.MobSpawner;
 import boss.utils.Namer;
 import boss.utils.Parse;
 
@@ -87,6 +88,8 @@ public class Mob {
 	private List<Skill> skills;
 	
 	private Entity entity = null;
+	
+	private MobSpawner spawner = null;
 	
 	public Mob(String configName, String type, String displayName, int health, int damage,
 			boolean despawn, boolean arrowImmune, boolean deathBroadcast, List<ItemObject> items,
@@ -154,7 +157,7 @@ public class Mob {
 		MobHandler.livingMobs.add(entity);
 	}
 	
-	public void spawn(Location l, List<Entity> spawnedEnts) {
+	public void spawn(Location l, MobSpawner spawner) {
 		LivingEntity le = this.spawnMob(l, this.type);
 		le.setCustomNameVisible(true);
 		le.setCustomName(Namer.addChatColor(displayName));
@@ -162,7 +165,7 @@ public class Mob {
 		le.setHealth(health);
 		entity = le;
 		MobHandler.livingMobs.add(entity);
-		spawnedEnts.add(entity);
+		this.spawner = spawner;
 	}
 
 	public void execute() {
@@ -519,6 +522,10 @@ public class Mob {
 
 	public Entity getEntity() {
 		return entity;
+	}
+
+	public MobSpawner getSpawner() {
+		return spawner;
 	}
 	
 }
