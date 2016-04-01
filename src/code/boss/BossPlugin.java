@@ -21,6 +21,7 @@ import boss.listeners.EntityDamageByEntityListener;
 import boss.listeners.EntityDeathListener;
 import boss.mob.MobCommands;
 import boss.mob.MobHandler;
+import boss.spawners.MobSpawnerHandler;
 
 public class BossPlugin extends JavaPlugin {
 
@@ -87,6 +88,10 @@ public class BossPlugin extends JavaPlugin {
 	
 	public void registerCommands() {
 		this.getCommand("boss").setExecutor(new MobCommands());
+	}
+	
+	public void registerTasks() {
+		this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new MobSpawnerHandler(), 0L, 20L);
 	}
 	
 	private void firstRun() throws Exception {
