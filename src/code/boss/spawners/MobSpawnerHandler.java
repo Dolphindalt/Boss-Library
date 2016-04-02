@@ -11,6 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import boss.BossPlugin;
+import boss.mob.Mob;
 import boss.mob.MobHandler;
 import boss.utils.Parse;
 
@@ -18,7 +19,10 @@ public class MobSpawnerHandler implements Runnable {
 
 	public static List<MobSpawner> spawners = new ArrayList<>();
 	
+	public static FileConfiguration fc;
+	
 	public static void loadSpawners(FileConfiguration fc) {
+		setFc(fc);
 		ConfigurationSection cs = fc.getConfigurationSection("Spawners");
 		for (String s : cs.getKeys(false)) {
 			if (MobHandler.getMob(cs.getString(".MobName")) == null) {
@@ -67,12 +71,12 @@ public class MobSpawnerHandler implements Runnable {
 			String[] split = location.split(",");
 			Location l = new Location(world, Parse.parseInteger(split[0]), Parse.parseInteger(split[1]), Parse.parseInteger(split[2]));
 			
-			MobSpawner spawner = new MobSpawner(MobHandler.getMob(cs.getString(".MobName")), l, interval, maxMobs);
+			MobSpawner spawner = new MobSpawner(s, MobHandler.getMob(cs.getString(".MobName")), l, interval, maxMobs);
 			
 			spawners.add(spawner);
 		}
 	}
-
+	
 	public void run() {
 		Iterator<MobSpawner> itr = spawners.iterator();
 		
@@ -80,6 +84,57 @@ public class MobSpawnerHandler implements Runnable {
 			MobSpawner spawner = itr.next();
 			spawner.tickSpawner();
 		}
+	}
+	
+	public void addSpawner(String name, Mob mob, Location location, int interval, int maxMobs) {
+		for (MobSpawner m : spawners) {
+			if (m.getName().equals(name)) {
+				return;
+			}
+		}
+		ConfigurationSection cs = fc.getConfigurationSection("Spawners");
+		MobSpawner spawner = new MobSpawner(name, mob, location, interval, maxMobs);
+		spawners.add(spawner);
+		
+		cs.createSection(name);
+		cs.createSection(name + ".MobName");
+		cs.createSection(name + ".World");
+		cs.createSection(name + ".Location");
+		cs.createSection(name + ".SpawnInterval");
+		cs.createSection(name + ".MaxLivingMobs");
+		cs.set(name + ".MobName", mob.getConfigName());
+		cs.set(name + ".World", location.getWorld());
+		cs.set(name + ".Location", location.getX() + "," + location.getY() + "," + location.getZ());
+		cs.set(name + ".SpawnInterval", interval);
+		cs.set(name + ".MaxLivingMobs", maxMobs);
+	}
+	
+	public void removeSpawner(String name) {
+		MobSpawner spawner;
+		if ((spawner = getSpawner(name)) != null) {
+			if (spawners.contains(spawner)) {
+				spawners.remove(spawner);
+				ConfigurationSection cs = fc.getConfigurationSection("Spawners");
+				cs.set(name, null);
+			}
+		}
+	}
+	
+	public MobSpawner getSpawner(String name) {
+		for (MobSpawner s : spawners) {
+			if (s.getName().equals(name)) {
+				return s;
+			}
+		}
+		return null;
+	}
+
+	public static FileConfiguration getFc() {
+		return fc;
+	}
+
+	public static void setFc(FileConfiguration fc) {
+		MobSpawnerHandler.fc = fc;
 	}
 	
 }

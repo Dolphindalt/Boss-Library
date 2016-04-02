@@ -5,6 +5,8 @@ import boss.mob.Mob;
 
 public class MobSpawner {
 
+	private String name;
+	
 	private Mob mob;
 	private int intervalConstant;
 	private int interval;
@@ -13,7 +15,8 @@ public class MobSpawner {
 	
 	private Location location;
 	
-	public MobSpawner(Mob mob, Location location, int interval, int maxMobs) {
+	public MobSpawner(String name, Mob mob, Location location, int interval, int maxMobs) {
+		this.name = name;
 		this.mob = mob;
 		this.intervalConstant= interval;
 		this.interval = 0;
@@ -39,6 +42,10 @@ public class MobSpawner {
 			location.getChunk().load(false);
 			interval = intervalConstant;
 		}
+	}
+
+	public String getName() {
+		return name;
 	}
 	
 }

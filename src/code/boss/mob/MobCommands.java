@@ -26,7 +26,10 @@ public class MobCommands implements CommandExecutor {
 					}
 					sender.sendMessage(list);
 					return true;
-				}
+				} else
+					if (args[0].equalsIgnoreCase("spawner")) {
+						
+					}
 			} catch (IndexOutOfBoundsException ez) {
 				sender.sendMessage("Invalid arguments!");
 			}

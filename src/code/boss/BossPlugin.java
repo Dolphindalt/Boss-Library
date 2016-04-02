@@ -35,9 +35,11 @@ public class BossPlugin extends JavaPlugin {
 	
 	public File mobFile;
 	public File itemFile;
+	public File spawnerFile;
 	
 	public FileConfiguration mobData;
 	public FileConfiguration itemData;
+	public FileConfiguration spawnerData;
 	
 	public void onEnable() {
 		instance = this;
@@ -52,6 +54,7 @@ public class BossPlugin extends JavaPlugin {
 		
 		mobFile = new File(getDataFolder(), "mobs.yml");
 		itemFile = new File(getDataFolder(), "items.yml");
+		spawnerFile = new File(getDataFolder(), "spawners.yml");
 		
 		try {
 			firstRun();
@@ -61,6 +64,7 @@ public class BossPlugin extends JavaPlugin {
 		
 		mobData = YamlConfiguration.loadConfiguration(mobFile);
 		itemData = YamlConfiguration.loadConfiguration(itemFile);
+		spawnerData = YamlConfiguration.loadConfiguration(spawnerFile);
 		
 		ItemHandler.loadItems(itemData);
 		logger.info("[Item Handler]: Loaded " + ItemHandler.items.size() + " items!");
@@ -69,8 +73,12 @@ public class BossPlugin extends JavaPlugin {
 		MobHandler.loadMobs(mobData);
 		logger.info("[Mob Handler]: Loaded " + MobHandler.mobs.size() + " mobs!");
 		
+		MobSpawnerHandler.loadSpawners(spawnerData);
+		logger.info("[MobSpawnerHandler]: Loaded " + MobSpawnerHandler.spawners.size() + " spawners!");
+		
 		registerEvents(pm);
 		registerCommands();
+		registerTasks();
 	}
 	
 	public void onDisable() {
@@ -102,6 +110,10 @@ public class BossPlugin extends JavaPlugin {
 	    if(!itemFile.exists()) {
 	        itemFile.getParentFile().mkdirs();
 	        copy(getResource("items.yml"), itemFile);
+	    }
+	    if(!spawnerFile.exists()) {
+	        spawnerFile.getParentFile().mkdirs();
+	        copy(getResource("spawners.yml"), spawnerFile);
 	    }
 	}
 	
