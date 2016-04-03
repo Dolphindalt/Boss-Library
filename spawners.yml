@@ -2,6 +2,6 @@ Spawners:
   Test:
     MobName: 'Skellington'
     World: 'world'
-    Location: '20,20,20'
+    Location: '30,68,302'
     SpawnInterval: 20
     MaxLivingMobs: 2

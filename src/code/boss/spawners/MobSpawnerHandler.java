@@ -25,14 +25,14 @@ public class MobSpawnerHandler implements Runnable {
 		setFc(fc);
 		ConfigurationSection cs = fc.getConfigurationSection("Spawners");
 		for (String s : cs.getKeys(false)) {
-			if (MobHandler.getMob(cs.getString(".MobName")) == null) {
+			if (MobHandler.getMob(cs.getString(s + ".MobName")) == null) {
 				BossPlugin.logger.warning("MobName failed for " + s);
 				continue;
 			}
 			
 			String sworld;
 			World world;
-			if ((sworld = cs.getString(".World")) == null) {
+			if ((sworld = cs.getString(s + ".World")) == null) {
 				BossPlugin.logger.warning("World failed for " + s);
 				continue;
 			}
@@ -71,7 +71,7 @@ public class MobSpawnerHandler implements Runnable {
 			String[] split = location.split(",");
 			Location l = new Location(world, Parse.parseInteger(split[0]), Parse.parseInteger(split[1]), Parse.parseInteger(split[2]));
 			
-			MobSpawner spawner = new MobSpawner(s, MobHandler.getMob(cs.getString(".MobName")), l, interval, maxMobs);
+			MobSpawner spawner = new MobSpawner(s, MobHandler.getMob(cs.getString(s + ".MobName")), l, interval, maxMobs);
 			
 			spawners.add(spawner);
 		}
@@ -86,7 +86,7 @@ public class MobSpawnerHandler implements Runnable {
 		}
 	}
 	
-	public void addSpawner(String name, Mob mob, Location location, int interval, int maxMobs) {
+	public static void addSpawner(String name, Mob mob, Location location, int interval, int maxMobs) {
 		for (MobSpawner m : spawners) {
 			if (m.getName().equals(name)) {
 				return;
@@ -109,7 +109,7 @@ public class MobSpawnerHandler implements Runnable {
 		cs.set(name + ".MaxLivingMobs", maxMobs);
 	}
 	
-	public void removeSpawner(String name) {
+	public static void removeSpawner(String name) {
 		MobSpawner spawner;
 		if ((spawner = getSpawner(name)) != null) {
 			if (spawners.contains(spawner)) {
@@ -120,7 +120,7 @@ public class MobSpawnerHandler implements Runnable {
 		}
 	}
 	
-	public MobSpawner getSpawner(String name) {
+	public static MobSpawner getSpawner(String name) {
 		for (MobSpawner s : spawners) {
 			if (s.getName().equals(name)) {
 				return s;

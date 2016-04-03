@@ -18,7 +18,7 @@ public class MobSpawner {
 	public MobSpawner(String name, Mob mob, Location location, int interval, int maxMobs) {
 		this.name = name;
 		this.mob = mob;
-		this.intervalConstant= interval;
+		this.intervalConstant = interval;
 		this.interval = 0;
 		this.livingMobs = 0;
 		this.maxMobs = maxMobs;
@@ -35,7 +35,7 @@ public class MobSpawner {
 	}
 	
 	private void spawnMob() {
-		if (livingMobs <= maxMobs) {
+		if (livingMobs != maxMobs) {
 			location.getChunk().load(true);
 			mob.spawn(location, this);
 			livingMobs++;

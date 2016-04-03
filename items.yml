@@ -12,5 +12,4 @@ Items:
 Carbyne:
   TestHelmet:
     GearCode: 'TTH'
-# Item name for the carbyne money object
-Money:
+# Item name for the carbyne money object is "Money".
