@@ -1,5 +1,6 @@
 package boss.spawners;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -107,6 +108,11 @@ public class MobSpawnerHandler implements Runnable {
 		cs.set(name + ".Location", location.getX() + "," + location.getY() + "," + location.getZ());
 		cs.set(name + ".SpawnInterval", interval);
 		cs.set(name + ".MaxLivingMobs", maxMobs);
+		try {
+			fc.save(BossPlugin.spawnerFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void removeSpawner(String name) {
@@ -116,6 +122,11 @@ public class MobSpawnerHandler implements Runnable {
 				spawners.remove(spawner);
 				ConfigurationSection cs = fc.getConfigurationSection("Spawners");
 				cs.set(name, null);
+				try {
+					fc.save(BossPlugin.spawnerFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

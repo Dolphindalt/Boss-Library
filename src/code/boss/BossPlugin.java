@@ -35,11 +35,11 @@ public class BossPlugin extends JavaPlugin {
 	
 	public File mobFile;
 	public File itemFile;
-	public File spawnerFile;
+	public static File spawnerFile;
 	
 	public FileConfiguration mobData;
 	public FileConfiguration itemData;
-	public FileConfiguration spawnerData;
+	public static FileConfiguration spawnerData;
 	
 	public void onEnable() {
 		instance = this;
