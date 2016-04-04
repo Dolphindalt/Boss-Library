@@ -104,8 +104,8 @@ public class MobSpawnerHandler implements Runnable {
 		cs.createSection(name + ".SpawnInterval");
 		cs.createSection(name + ".MaxLivingMobs");
 		cs.set(name + ".MobName", mob.getConfigName());
-		cs.set(name + ".World", location.getWorld());
-		cs.set(name + ".Location", location.getX() + "," + location.getY() + "," + location.getZ());
+		cs.set(name + ".World", location.getWorld().getName());
+		cs.set(name + ".Location", (int)Math.floor(location.getX()) + "," + (int)Math.floor(location.getY()) + "," + (int)Math.floor(location.getZ()));
 		cs.set(name + ".SpawnInterval", interval);
 		cs.set(name + ".MaxLivingMobs", maxMobs);
 		try {
