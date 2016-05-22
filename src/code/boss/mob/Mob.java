@@ -228,7 +228,6 @@ public class Mob {
 	}
 	
 	//Method is old needs updating
-	@SuppressWarnings("deprecation")
 	private LivingEntity spawnMob(Location loc, String s) {
 		if(s.equals("zombie"))
 		{
