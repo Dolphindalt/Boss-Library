@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 public class CustomEntityFirework extends EntityFireworks {
+
 	Player[] players = null;
 
 	public CustomEntityFirework(World world, Player... p) {
@@ -57,4 +58,5 @@ public class CustomEntityFirework extends EntityFireworks {
 			e.printStackTrace();
 		}
 	}
+	
 }
