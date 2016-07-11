@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+<<<<<<< HEAD
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="/Users/gabrielmaennl5/Desktop/CarbyneGear.jar"/>
 	<classpathentry kind="lib" path="/Users/gabrielmaennl5/Desktop/BukkitServer/craftbukkit.jar"/>
 	<classpathentry kind="lib" path="/Users/gabrielmaennl5/Downloads/spigot-1.8.7.jar"/>
+=======
+	<classpathentry kind="src" path="code"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Dalton/Desktop/Develope Stuff/Libraries/custom/CarbyneGear.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dalton/Desktop/Develope Stuff/Libraries/spigot-1.8.7.jar"/>
+>>>>>>> parent of abb24fc... Fireworks change
 	<classpathentry kind="output" path="bin"/>
 </classpath>
