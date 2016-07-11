@@ -32,7 +32,7 @@ Mobs:
         Skills:
         - 'Parry,0.75'
     God:
-        Type: 'horse'
+        Type: 'spider'
         DisplayName: '&eGod'
         Health: 200
         Damage: 3
